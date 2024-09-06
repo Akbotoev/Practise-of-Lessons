@@ -1,0 +1,28 @@
+.header {
+    background-color: #333; // Тёмный фон для header
+    padding: 20px;
+    text-align: center;
+  
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 30px; // Отступ между ссылками
+    }
+  
+    .header__link {
+      color: #fff; // Цвет текста для ссылок
+      text-decoration: none; // Убираем подчёркивание
+      font-size: 18px;
+      transition: color 0.3s ease, transform 0.3s ease;
+  
+      &:hover {
+        color: #f0a500; // Цвет текста при наведении
+        transform: scale(1.1); // Лёгкое увеличение при наведении
+      }
+  
+      &.active {
+        color: #f0a500; // Цвет активной ссылки
+      }
+    }
+  }
+  
