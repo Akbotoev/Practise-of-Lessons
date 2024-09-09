@@ -7,7 +7,8 @@ export const Header = () => {
             
             <nav>
                 <NavLink to='/' className="header__link">HomePage</NavLink>
-                <NavLink to='authpage' className="header__link">AuthPage</NavLink>
+                <NavLink to='/authpage' className="header__link">AuthPage</NavLink>
+                <NavLink to='/tasklid' className="header__link">TaskLid</NavLink>
             </nav>
         </div>
         </>

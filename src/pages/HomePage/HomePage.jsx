@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './HomePage.scss';
-import e from 'express';
-//сделать кнопку при нажати которой пустой див блок меняет цвет
+import {AuthPage} from '../AuthPage/AuthPage';
+
 export const HomePage = () => {
   const [gate, setGate] = useState(0);
   const [tasks, setTasks] = useState([]);
@@ -11,14 +11,15 @@ export const HomePage = () => {
   const [name, setName] = useState('');
   const [feedBack, setFeedBack] = useState('');
   const [isSubmit, setSubmit] = useState(false);
-  const [change, setChange] = useState(false)
+  const [isChange, setChange] = useState(false);
+  const [todos, setTodos] = useState([]);
+  const [newTodo, setNewTodo] = useState('');
+
   const addTask = () => {
     setTasks([...tasks, task]);
     setTask('');
   };
-  const changeColorClick = () => {
-    setChange(!change)
-  }
+
   const removeTask = (index) => {
     const newTasks = tasks.filter((_, i) => i !== index);
     setTasks(newTasks);
@@ -35,6 +36,21 @@ export const HomePage = () => {
   const handlePrevendDefault = (e) => {
     e.preventDefault();
     setSubmit(true);
+  };
+
+  const handleChangeColor = () => {
+    setChange(!isChange);
+  };
+
+  const addTodos = () => {
+    setTodos([...todos, { text: newTodo, completed: false }]);
+    setNewTodo('');
+  };
+
+  const toggleTodo = (index) => {
+    const newTodos = [...todos];
+    newTodos[index].completed = !newTodos[index].completed;
+    setTodos(newTodos);
   };
 
   return (
@@ -98,10 +114,46 @@ export const HomePage = () => {
             </form>
           )}
         </div>
-      </div>
 
-      
-   
+        <div className='block__change' style={{ background: isChange ? 'blue' : 'pink', width: '200px', height: '200px' }}>
+          <button onClick={handleChangeColor}>Change</button>
+        </div>
+
+        <br />
+
+        <div>
+          <h1>Todo List</h1>
+          <input
+            type='text'
+            value={newTodo}
+            onChange={(e) => setNewTodo(e.target.value)}
+          />
+          <button onClick={addTodos}>Add Todo</button>
+          <ul>
+            {todos.map((todo, index) => (
+              <TodoItem
+                key={index}
+                todo={todo}
+                toggleTodo={() => toggleTodo(index)}
+              />
+            ))}
+            <AuthPage/>
+          </ul>
+        </div>
+      </div>
     </>
   );
 };
+
+
+const TodoItem = ({ todo, toggleTodo }) => (
+  <li>
+    <span style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}>
+      {todo.text}
+    </span>
+    <button onClick={toggleTodo}>
+      {todo.completed ? 'Undo' : 'Complete'}
+    </button>
+  </li>
+);
+const TodoSpan = ({})
