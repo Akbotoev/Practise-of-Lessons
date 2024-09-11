@@ -1,38 +1,29 @@
-import { useEffect, useState } from "react";
-import { text } from "stream/consumers";
+import { useState } from "react";
 
 export const TaskLid = () => {
-     const [ time, setTime] = useState(10);
 
-     const [ isText, setText] = useState('')
+    const [ photos, setPhotos ] = useState([]);
+    const [ currentPhoto, setCurrentPhoto ] = useState('');
 
-     const handleButtonChange = () =>{
-        alert(isText)
-     }
-     useEffect(() => {
-        if(0 == time) return;
-
-        const intervalId = setInterval(() => {
-            setTime((prev) => prev -1)
-        },1000);
-
-        return () => clearInterval(intervalId);
-     },[time])
+    const handleButtonChange = () => {
+        const url = `https://picsum.photos/600/400?random=${Date.now()}`;
+        setCurrentPhoto(url);
+        setPhotos(prevPhoto => [...prevPhoto, photos])
+    }
     return(
         <>
-        <div>
-            <h1>Осталось времени {time}</h1>
-
-        </div>
-        
-        <div>
-            <input 
-            type="text"
-            value={isText}
-            onChange={(e) => setText(e.target.value)}/>
-
-            <button onClick={handleButtonChange}>Clickeding</button>
-        </div>
+       <div>
+        <button className="btn" onClick={handleButtonChange}> Click Me</button>
+        {currentPhoto && <img src={currentPhoto} alt={`random photo`}/>}
+        <ul>
+            {photos.map((photo, index) => {
+                <li key={index}>
+                    <img src={photo}
+                     alt={`Random Photo${index + 1}`}/>
+                </li>
+            })}
+        </ul>
+       </div>
         </>
     )
 }
